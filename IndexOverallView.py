@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from WindPy import *
+import time
 import datetime
 
 
@@ -38,7 +39,7 @@ def weekday_returner(date_input):
         '2': '周三',
         '3': '周四',
         '4': '上周五'
-    }.get(str(weekday), '不在周一至周五的范围内')
+    }.get(str(weekday))
 
 
 def text_generator(stock_id_list, date):
@@ -65,6 +66,13 @@ def text_generator(stock_id_list, date):
 if __name__ == "__main__":
     Stock_ID = input('请输入想要查询的股票代码，逗号隔开，默认主板指数请输入1：')
     DATE = input('请输入想要导出的日期（如20181030），默认为当天：')
+    weekday = datetime.datetime(int(DATE[0:4]), int(DATE[4:6]), int(DATE[6:8])).weekday()
+    if weekday == 5 or weekday == 6:
+        print('日期不在周一至周五的范围内，程序即将结束。')
+        time.sleep(2)
+        sys.exit(0)
+    else:
+        pass
     if Stock_ID != '1':  # If there is a string input
         pass
     elif Stock_ID == '1':

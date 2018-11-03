@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 from WindPy import *
-import time
-import datetime
 import Services
-import spider_Findtoday
 
 w.start()
 
 
-class StockIdPrinter:
+class StockDetailFinder:
     def __init__(self, stock_id, date_input):
         self.stock_id = stock_id
         self.date_input = date_input
@@ -41,7 +38,7 @@ def market_overview(stock_id_list, date):
 
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
-        sec_name, pct_chg, chg, close, amt = StockIdPrinter(stock, date).data_printer()
+        sec_name, pct_chg, chg, close, amt = StockDetailFinder(stock, date).data_printer()
         if stock_num < len(stock_id_list)-1:
             symbol = '；'
         else:
@@ -58,7 +55,7 @@ def volume_detector(stock_id_list, date):
     print("成交量方面，", end='')
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
-        sec_name, pct_chg, chg, close, amt = StockIdPrinter(stock, date).data_printer()
+        sec_name, pct_chg, chg, close, amt = StockDetailFinder(stock, date).data_printer()
         if stock_num < len(stock_id_list)-1:
             symbol = '，'
         else:
@@ -69,30 +66,3 @@ def volume_detector(stock_id_list, date):
             '创业板指': '创业板'
         }.get(sec_name, 'Error!')
         print('%s成交%.2f亿元' % (sec_name, (amt/100000000)), end=symbol)
-
-
-if __name__ == "__main__":
-    DATE = input('请输入想要导出的日期（如20181030）：')
-    weekday = datetime.datetime(int(DATE[0:4]), int(DATE[4:6]), int(DATE[6:8])).weekday()
-    if weekday == 5 or weekday == 6:
-        print('日期不在周一至周五的范围内，程序即将结束。')
-        time.sleep(2)
-        sys.exit(0)
-    else:
-        pass
-
-    print('全球市场')
-    Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
-    Stock_ID_List_CN = Stock_ID_CN.split(',')
-    market_overview(Stock_ID_List_CN, DATE)
-    Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
-    Stock_ID_List_Asia = Stock_ID_Asia.split(',')
-    market_overview(Stock_ID_List_Asia, DATE)
-
-    print('\n成交量')
-    Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
-    Stock_ID_List_CN = Stock_ID_CN.split(',')
-    volume_detector(Stock_ID_List_CN, DATE)
-
-    print('\n宏观策略')
-    spider_Findtoday.get_comment(date=DATE)

@@ -2,7 +2,8 @@
 from WindPy import *
 import time
 import datetime
-
+import Services
+import spider_Findtoday
 
 w.start()
 
@@ -14,7 +15,7 @@ class StockIdPrinter:
 
     def data_manage(self):
         get_data = w.wss(self.stock_id,
-                         "SEC_NAME,WINDCODE,CHG,PCT_CHG,CLOSE3",
+                         "SEC_NAME,WINDCODE,CHG,PCT_CHG,CLOSE3,AMT",
                          "tradeDate=%s;priceAdj=U;cycle=D" % self.date_input)
         data_dict = {}
         for i in range(len(get_data.Codes)):
@@ -28,33 +29,23 @@ class StockIdPrinter:
     def data_printer(self):
         data_dict = self.data_manage()
         return data_dict[self.stock_id]['SEC_NAME'], round(data_dict[self.stock_id]['PCT_CHG'], 2), \
-            round(data_dict[self.stock_id]['CHG'], 2), round(data_dict[self.stock_id]['CLOSE3'], 2)
+            round(data_dict[self.stock_id]['CHG'], 2), round(data_dict[self.stock_id]['CLOSE3'], 2), \
+            data_dict[self.stock_id]['AMT']
 
 
-def weekday_returner(date_input):
-    weekday = datetime.datetime(int(date_input[0:4]), int(date_input[4:6]), int(date_input[6:8])).weekday()
-    return {
-        '0': '周一',
-        '1': '周二',
-        '2': '周三',
-        '3': '周四',
-        '4': '上周五'
-    }.get(str(weekday))
-
-
-def text_generator(stock_id_list, date):
-    weekday = weekday_returner(date_input=date)
+def market_overview(stock_id_list, date):
+    weekday = Services.weekday_returner(date=date)
     date = date[4:6] + '月' + date[6:8] + '日'
     weekday = weekday + '（' + date + '）'
     print(weekday, end='，')
 
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
-        sec_name, pct_chg, chg, close = StockIdPrinter(stock, date).data_printer()
+        sec_name, pct_chg, chg, close, amt = StockIdPrinter(stock, date).data_printer()
         if stock_num < len(stock_id_list)-1:
             symbol = '；'
-        elif stock_num == len(stock_id_list)-1:
-            symbol = '。'
+        else:
+            symbol = '。\n'
         if pct_chg < 0:
             print('%s跌%.2f%%或%.2f点，报%.2f点' % (sec_name, abs(pct_chg), abs(chg), close), end=symbol)
         elif pct_chg == 0:
@@ -63,9 +54,25 @@ def text_generator(stock_id_list, date):
             print('%s涨%.2f%%或%.2f点，报%.2f点' % (sec_name, abs(pct_chg), abs(chg), close), end=symbol)
 
 
+def volume_detector(stock_id_list, date):
+    print("成交量方面，", end='')
+    for stock_num in range(len(stock_id_list)):
+        stock = stock_id_list[stock_num]
+        sec_name, pct_chg, chg, close, amt = StockIdPrinter(stock, date).data_printer()
+        if stock_num < len(stock_id_list)-1:
+            symbol = '，'
+        else:
+            symbol = '。\n'
+        sec_name = {
+            '上证综指': '沪市',
+            '深证成指': '深市',
+            '创业板指': '创业板'
+        }.get(sec_name, 'Error!')
+        print('%s成交%.2f亿元' % (sec_name, (amt/100000000)), end=symbol)
+
+
 if __name__ == "__main__":
-    Stock_ID = input('请输入想要查询的股票代码，逗号隔开，默认主板指数请输入1：')
-    DATE = input('请输入想要导出的日期（如20181030），默认为当天：')
+    DATE = input('请输入想要导出的日期（如20181030）：')
     weekday = datetime.datetime(int(DATE[0:4]), int(DATE[4:6]), int(DATE[6:8])).weekday()
     if weekday == 5 or weekday == 6:
         print('日期不在周一至周五的范围内，程序即将结束。')
@@ -73,9 +80,19 @@ if __name__ == "__main__":
         sys.exit(0)
     else:
         pass
-    if Stock_ID != '1':  # If there is a string input
-        pass
-    elif Stock_ID == '1':
-        Stock_ID = '000001.SH,399001.SZ,399006.SZ'
-    Stock_ID_List = Stock_ID.split(',')
-    text_generator(Stock_ID_List, DATE)
+
+    print('全球市场')
+    Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
+    Stock_ID_List_CN = Stock_ID_CN.split(',')
+    market_overview(Stock_ID_List_CN, DATE)
+    Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
+    Stock_ID_List_Asia = Stock_ID_Asia.split(',')
+    market_overview(Stock_ID_List_Asia, DATE)
+
+    print('\n成交量')
+    Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
+    Stock_ID_List_CN = Stock_ID_CN.split(',')
+    volume_detector(Stock_ID_List_CN, DATE)
+
+    print('\n宏观策略')
+    spider_Findtoday.get_comment(date=DATE)

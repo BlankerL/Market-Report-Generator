@@ -2,7 +2,7 @@ import datetime
 import time
 import sys
 import Index_Overview
-import spider_Findtoday
+import XueQiuSpider_Find3Pages
 
 
 if __name__ == "__main__":
@@ -29,4 +29,4 @@ if __name__ == "__main__":
     Index_Overview.volume_detector(Stock_ID_List_CN, DATE)
 
     print('\n宏观策略')
-    spider_Findtoday.get_comment(date=DATE)
+    XueQiuSpider_Find3Pages.get_comment(date=DATE)

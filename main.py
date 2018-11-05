@@ -16,17 +16,24 @@ if __name__ == "__main__":
         pass
 
     print('全球市场')
+    # Chinese Market
     Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
     Stock_ID_List_CN = Stock_ID_CN.split(',')
-    Index_Overview.market_overview(Stock_ID_List_CN, DATE)
+    Index_Overview.market_overview_china(Stock_ID_List_CN, DATE)
+    # Asian Market
     Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
-    Index_Overview.market_overview(Stock_ID_List_Asia, DATE)
+    Index_Overview.market_overview_other('亚太股市', Stock_ID_List_Asia, DATE)
 
-    print('\n成交量')
+
+    print('\n')
+
+    print('成交量')
     Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
     Stock_ID_List_CN = Stock_ID_CN.split(',')
     Index_Overview.volume_detector(Stock_ID_List_CN, DATE)
 
-    print('\n宏观策略')
+    print('\n')
+
+    print('宏观策略')
     XueQiuSpider_Find3Pages.get_comment(date=DATE)

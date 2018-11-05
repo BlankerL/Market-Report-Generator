@@ -29,8 +29,10 @@ class StockDetailFinder:
             round(data_dict[self.stock_id]['CHG'], 2), round(data_dict[self.stock_id]['CLOSE3'], 2), \
             data_dict[self.stock_id]['AMT']
 
-
-def market_overview(stock_id_list, date):
+# The main difference between China and Others are the delivery of contents.
+# In China, I need to mention the specific points of going up or down.
+# In other markets, it is in no need. But I need to mention all the N markets total performance.
+def market_overview_china(stock_id_list, date):
     weekday = Services.weekday_returner(date=date)
     date = date[4:6] + '月' + date[6:8] + '日'
     weekday = weekday + '（' + date + '）'
@@ -49,6 +51,47 @@ def market_overview(stock_id_list, date):
             print('%s报%.2f点，与开盘价格持平' % (sec_name, close), end=symbol)
         else:
             print('%s涨%.2f%%或%.2f点，报%.2f点' % (sec_name, abs(pct_chg), abs(chg), close), end=symbol)
+
+
+def market_overview_other(market_type, stock_id_list, date):
+    # print date
+    weekday = Services.weekday_returner(date=date)
+    date = date[4:6] + '月' + date[6:8] + '日'
+    weekday = weekday + '（' + date + '）'
+    print(weekday, end='，')
+    # parameters for save data into dict and generate the overview words of the market
+    go_up = 0
+    stock_dict = {}
+    for stock_num in range(len(stock_id_list)):
+        stock = stock_id_list[stock_num]
+        stock_dict[stock_num] = {}
+        stock_dict[stock_num]['sec_name'], stock_dict[stock_num]['pct_chg'], stock_dict[stock_num]['chg'], stock_dict[stock_num]['close'], stock_dict[stock_num]['amt'] = StockDetailFinder(stock, date).data_printer()
+    for stock_num in range(len(stock_id_list)):
+        if stock_dict[stock_num]['pct_chg'] > 0:
+            go_up = go_up + 1
+        else:
+            pass
+    print(market_type, end='')
+    if go_up == len(stock_id_list):
+        print('收盘全线上涨', end='。')
+    elif go_up >= len(stock_id_list)/2:
+        print('收盘普涨', end='。')
+    elif go_up < len(stock_id_list)/2:
+        print('收盘普跌', end='。')
+    elif go_up == 0:
+        print('收盘全线下跌', end='。')
+    # read data in the dict and print the performance of the market of the day
+    for stock_num in range(len(stock_id_list)):
+        if stock_num < len(stock_id_list) - 1:
+            symbol = '；'
+        else:
+            symbol = '。\n'
+        if stock_dict[stock_num]['pct_chg'] < 0:
+            print('%s跌%.2f%%，报%.2f点' % (stock_dict[stock_num]['sec_name'], abs(stock_dict[stock_num]['pct_chg']), stock_dict[stock_num]['close']), end=symbol)
+        elif stock_dict[stock_num]['pct_chg'] == 0:
+            print('%s报%.2f点，与开盘价格持平' % (stock_dict[stock_num]['sec_name'], stock_dict[stock_num]['close']), end=symbol)
+        else:
+            print('%s涨%.2f%%，报%.2f点' % (stock_dict[stock_num]['sec_name'], abs(stock_dict[stock_num]['pct_chg']), stock_dict[stock_num]['close']), end=symbol)
 
 
 def volume_detector(stock_id_list, date):

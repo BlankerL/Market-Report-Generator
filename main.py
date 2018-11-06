@@ -14,7 +14,7 @@ if __name__ == "__main__":
         sys.exit(0)
     else:
         pass
-
+    # TODO: Bugs to fix: date will be printed as 11-06 <- the zero need to be eliminated20
     print('全球市场')
     # Chinese Market
     Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     XueQiuSpider_Find3Pages.get_comment(date=DATE)
 
     print('\n')
-
+    # TODO: The update of the data is too slow, find a new port to import data.
     print('海外市场')
     # US Market
     Stock_ID_US = "DJI.GI,SPX.GI,IXIC.GI"
@@ -52,3 +52,8 @@ if __name__ == "__main__":
     Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
     Index_Overview.market_overview_other('亚太股市', Stock_ID_List_Asia, DATE)
+
+    print('\n')
+
+    print('金融期货')
+    # TODO: Make these codes done.

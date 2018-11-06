@@ -8,7 +8,7 @@ w.start()
 class StockDetailFinder:
     def __init__(self, stock_id, date_input):
         self.stock_id = stock_id
-        self.date_input = date_input
+        self.date_input = date_input  # Need to be an str
 
     def data_manage(self):
         get_data = w.wss(self.stock_id,
@@ -28,6 +28,7 @@ class StockDetailFinder:
         return data_dict[self.stock_id]['SEC_NAME'], round(data_dict[self.stock_id]['PCT_CHG'], 2), \
             round(data_dict[self.stock_id]['CHG'], 2), round(data_dict[self.stock_id]['CLOSE3'], 2), \
             data_dict[self.stock_id]['AMT']
+
 
 # The main difference between China and Others are the delivery of contents.
 # In China, I need to mention the specific points of going up or down.
@@ -96,16 +97,36 @@ def market_overview_other(market_type, stock_id_list, date):
 
 def volume_detector(stock_id_list, date):
     print("成交量方面，", end='')
+    total_amt_today = 0
+    total_amt_yesterday = 0
+    # Today Volume
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
         sec_name, pct_chg, chg, close, amt = StockDetailFinder(stock, date).data_printer()
-        if stock_num < len(stock_id_list)-1:
-            symbol = '，'
-        else:
-            symbol = '。\n'
         sec_name = {
             '上证综指': '沪市',
             '深证成指': '深市',
             '创业板指': '创业板'
         }.get(sec_name, 'Error!')
-        print('%s成交%.2f亿元' % (sec_name, (amt/100000000)), end=symbol)
+        amt = amt/100000000
+        print('%s成交%.2f亿元' % (sec_name, amt), end='，')
+        total_amt_today = total_amt_today + amt
+    # Yesterday Volume
+    if Services.weekday_returner(date) == '周一':
+        yesterday_date = str(int(date)-3)
+    else:
+        yesterday_date = str(int(date)-1)
+    for stock_num in range(len(stock_id_list)):
+        stock = stock_id_list[stock_num]
+        sec_name, pct_chg, chg, close, amt = StockDetailFinder(stock, yesterday_date).data_printer()
+        amt = amt / 100000000
+        total_amt_yesterday = total_amt_yesterday + amt
+    print('总成交额%.2f亿元' % total_amt_today, end='，')
+    if total_amt_today > total_amt_yesterday * 1.2:
+        print('较上一交易日量能明显上升。')
+    elif total_amt_yesterday < total_amt_today < total_amt_yesterday * 1.2:
+        print('较上一交易日有所上升。')
+    elif total_amt_today < total_amt_yesterday * 0.8:
+        print('较上一交易日成交量显著减小。')
+    elif total_amt_today < total_amt_yesterday:
+        print('较上一交易日成交量有所缩小。')

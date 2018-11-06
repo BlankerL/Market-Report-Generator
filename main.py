@@ -25,7 +25,6 @@ if __name__ == "__main__":
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
     Index_Overview.market_overview_other('亚太股市', Stock_ID_List_Asia, DATE)
 
-
     print('\n')
 
     print('成交量')

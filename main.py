@@ -36,3 +36,19 @@ if __name__ == "__main__":
 
     print('宏观策略')
     XueQiuSpider_Find3Pages.get_comment(date=DATE)
+
+    print('\n')
+
+    print('海外市场')
+    # US Market
+    Stock_ID_US = "DJI.GI,SPX.GI,IXIC.GI"
+    Stock_ID_List_US = Stock_ID_US.split(',')
+    Index_Overview.market_overview_other('美国三大股指', Stock_ID_List_US, DATE)
+    # European Market
+    Stock_ID_US = "FTSE.GI,FCHI.GI,GDAXI.GI"
+    Stock_ID_List_US = Stock_ID_US.split(',')
+    Index_Overview.market_overview_other('欧洲三大股指', Stock_ID_List_US, DATE)
+    # Asian Market
+    Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
+    Stock_ID_List_Asia = Stock_ID_Asia.split(',')
+    Index_Overview.market_overview_other('亚太股市', Stock_ID_List_Asia, DATE)

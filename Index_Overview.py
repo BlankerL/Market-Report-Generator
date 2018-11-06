@@ -83,6 +83,17 @@ def market_overview_other(market_type, stock_id_list, date):
         print('收盘全线下跌', end='。')
     # read data in the dict and print the performance of the market of the day
     for stock_num in range(len(stock_id_list)):
+        stock_dict[stock_num]['sec_name'] = {
+            '日经225': '日经225指数',
+            '韩国综合指数': '韩国综合指数',
+            '澳洲标普200': '澳大利亚ASX200指数',
+            '道琼斯工业指数': '道琼斯工业平均指',
+            '标普500': '标普500指数',
+            '纳斯达克指数': '纳斯达克综合指数',
+            '富时100': '英国富时100指数',
+            '法国CAC40': '法国CAC40指数',
+            '德国DAX': '德国DAX指数'
+        }.get(stock_dict[stock_num]['sec_name'], 'Error!')
         if stock_num < len(stock_id_list) - 1:
             symbol = '；'
         else:

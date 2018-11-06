@@ -24,12 +24,13 @@ def spider(page):
 
 
 def post_manage(user_post, date_input):
-    year = time.strftime("%Y", time.localtime())
     date = date_input
     for i in range(len(user_post)):
-        post_time = time.localtime(user_post[0]['created_at']/1000)
+        post_time = time.localtime(user_post[i]['created_at']/1000)
         post_day = time.strftime("%Y%m%d", post_time)
-        if date == post_day and Services.weekday_returner(date=date) in user_post[i]['text'][0:10]:
+        post_hour = time.strftime("%H", post_time)
+        # Three Judgement: date matches, time matches, the beginning words match
+        if date == post_day and int(post_hour) >= 15 and Services.weekday_returner(date=date) in user_post[i]['text'][0:10]:
             today_post = user_post[i]['text']
             today_post_list = re.split(r"<p>|</p>|<br/>", today_post)
             while '' in today_post_list:

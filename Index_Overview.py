@@ -1,39 +1,6 @@
 # -*- coding: utf-8 -*-
-from WindPy import *
+import StockDetailFinder
 import Services
-
-w.start()
-
-
-class StockDetailFinder:
-    def __init__(self, stock_id, date_input):
-        self.stock_id = stock_id
-        self.date_input = date_input  # Need to be an str
-
-    def data_manage(self):
-        get_name = w.wss(self.stock_id,
-                         "SEC_NAME,WINDCODE",
-                         "tradeDate=%s;priceAdj=U;cycle=D" % self.date_input)
-        get_data = w.wsq(self.stock_id,
-                         "RT_CHG,RT_PCT_CHG,rt_last,rt_amt",
-                         "tradeDate=%s;priceAdj=U;cycle=D" % self.date_input)
-        data_dict = {}
-        for i in range(len(get_name.Codes)):
-            codes = get_name.Codes[i]
-            data_dict[codes] = {}
-            for j in range(len(get_name.Fields)):
-                data_name = get_name.Fields[j]
-                data_dict[codes][data_name] = get_name.Data[j][i]
-            for j in range(len(get_data.Fields)):
-                data_name = get_data.Fields[j]
-                data_dict[codes][data_name] = get_data.Data[j][i]
-        return data_dict
-
-    def data_printer(self):
-        data_dict = self.data_manage()
-        return data_dict[self.stock_id]['SEC_NAME'], round(data_dict[self.stock_id]['RT_PCT_CHG']*100, 2), \
-            round(data_dict[self.stock_id]['RT_CHG'], 2), round(data_dict[self.stock_id]['RT_LAST'], 2), \
-            data_dict[self.stock_id]['RT_AMT']
 
 
 # The main difference between China and Others are the delivery of contents.
@@ -47,7 +14,7 @@ def market_overview_china(stock_id_list, date):
 
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
-        sec_name, pct_chg, chg, close, amt = StockDetailFinder(stock, date).data_printer()
+        sec_name, pct_chg, chg, close, amt = StockDetailFinder.StockDetailFinder(stock, date).data_printer()
         if stock_num < len(stock_id_list)-1:
             symbol = '；'
         else:
@@ -72,7 +39,7 @@ def market_overview_other(market_type, stock_id_list, date):
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
         stock_dict[stock_num] = {}
-        stock_dict[stock_num]['sec_name'], stock_dict[stock_num]['pct_chg'], stock_dict[stock_num]['chg'], stock_dict[stock_num]['close'], stock_dict[stock_num]['amt'] = StockDetailFinder(stock, date).data_printer()
+        stock_dict[stock_num]['sec_name'], stock_dict[stock_num]['pct_chg'], stock_dict[stock_num]['chg'], stock_dict[stock_num]['close'] = StockDetailFinder.StockDetailFinder(stock, date).data_printer()
     for stock_num in range(len(stock_id_list)):
         if stock_dict[stock_num]['pct_chg'] > 0:
             go_up = go_up + 1
@@ -119,7 +86,7 @@ def volume_detector(stock_id_list, date):
     # Today Volume
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
-        sec_name, pct_chg, chg, close, amt = StockDetailFinder(stock, date).data_printer()
+        sec_name, pct_chg, chg, close, amt = StockDetailFinder.StockDetailFinder(stock, date).data_printer()
         sec_name = {
             '上证综指': '沪市',
             '深证成指': '深市',
@@ -135,10 +102,11 @@ def volume_detector(stock_id_list, date):
         yesterday_date = str(int(date)-1)
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
-        sec_name, pct_chg, chg, close, amt = StockDetailFinder(stock, yesterday_date).data_printer()
+        sec_name, pct_chg, chg, close, amt = StockDetailFinder.StockDetailFinder(stock, yesterday_date).data_printer()
         amt = amt / 100000000
         total_amt_yesterday = total_amt_yesterday + amt
     print('总成交额%.2f亿元' % total_amt_today, end='，')
+    print(total_amt_yesterday)
     if total_amt_today > total_amt_yesterday * 1.2:
         print('较上一交易日量能明显上升。')
     elif total_amt_yesterday < total_amt_today < total_amt_yesterday * 1.2:

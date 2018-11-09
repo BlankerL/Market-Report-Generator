@@ -1,4 +1,5 @@
 import datetime
+import requests
 
 
 def date_optimizer(month_or_day):
@@ -35,3 +36,7 @@ def weekday_printer(date):
     date = date_optimizer(date[4:6]) + '月' + date_optimizer(date[6:8]) + '日'
     return weekday + '（' + date + '）'
 
+def Derivatives_Getter():
+    url = 'https://BlankerL.github.io/UpdateChecker/Market_Report/derivatives.json'
+    data = requests.get(url=url)
+    return data.json()

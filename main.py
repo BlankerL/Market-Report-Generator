@@ -2,6 +2,7 @@ from WindPy import *
 import datetime
 import time
 import sys
+import Services
 import Index_Overview
 import XueQiuSpider_Find3Pages
 
@@ -60,7 +61,7 @@ if __name__ == "__main__":
     print('\n')
 
     print('金融期货')
-    Stock_ID_Asia = "IF1811.CFE"
+    ID_Dictionary = Services.Derivatives_Getter()
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
     Index_Overview.market_overview_china(Stock_ID_List_Asia, DATE)
     # TODO: Make these codes done.

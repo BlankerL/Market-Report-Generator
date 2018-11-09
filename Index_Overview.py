@@ -13,7 +13,7 @@ def market_overview_china(stock_id_list, date):
 
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
-        sec_name, pct_chg, chg, close, amt = StockDetailFinder.StockDetailFinder(stock, date).data_printer()
+        sec_name, pct_chg, chg, close, amt = StockDetailFinder.Session(stock, date).data_printer()
         if stock_num < len(stock_id_list)-1:
             symbol = '；'
         else:
@@ -36,7 +36,7 @@ def market_overview_other(market_type, stock_id_list, date):
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
         stock_dict[stock_num] = {}
-        stock_dict[stock_num]['sec_name'], stock_dict[stock_num]['pct_chg'], stock_dict[stock_num]['chg'], stock_dict[stock_num]['close'], stock_dict[stock_num]['amt'] = StockDetailFinder.StockDetailFinder(stock, date).data_printer()
+        stock_dict[stock_num]['sec_name'], stock_dict[stock_num]['pct_chg'], stock_dict[stock_num]['chg'], stock_dict[stock_num]['close'], stock_dict[stock_num]['amt'] = StockDetailFinder.Session(stock, date).data_printer()
     for stock_num in range(len(stock_id_list)):
         if stock_dict[stock_num]['pct_chg'] > 0:
             go_up = go_up + 1
@@ -83,7 +83,7 @@ def volume_detector(stock_id_list, date):
     # Today Volume
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
-        sec_name, pct_chg, chg, close, amt = StockDetailFinder.StockDetailFinder(stock, date).data_printer()
+        sec_name, pct_chg, chg, close, amt = StockDetailFinder.Session(stock, date).data_printer()
         sec_name = {
             '上证综指': '沪市',
             '深证成指': '深市',
@@ -99,7 +99,7 @@ def volume_detector(stock_id_list, date):
         yesterday_date = str(int(date)-1)
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
-        sec_name, pct_chg, chg, close, amt = StockDetailFinder.StockDetailFinder(stock, yesterday_date).data_printer()
+        sec_name, pct_chg, chg, close, amt = StockDetailFinder.Session(stock, yesterday_date).data_printer()
         amt = amt / 100000000
         total_amt_yesterday = total_amt_yesterday + amt
     print('总成交额%.2f亿元' % total_amt_today, end='，')

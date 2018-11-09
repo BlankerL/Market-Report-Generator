@@ -14,18 +14,18 @@ class Session:
         date_today = datetime.date.today().strftime('%Y%m%d')
         is_get_dynamic = 0
         if self.date_input == date_today:
+            # TODO: Check the use of wss/wsq in SDF
             get_static = w.wss(self.stock_id,
                                "SEC_NAME,WINDCODE",
                                "tradeDate=%s;priceAdj=U;cycle=D" % self.date_input)
             get_dynamic = w.wsq(self.stock_id,
-                                "RT_CHG,RT_PCT_CHG,RT_LAST,RT_AMT")
-            get_dynamic.Data[1][0] = get_dynamic.Data[1][0] * 100
+                                "RT_CHG,RT_PCT_CHG,RT_LAST,RT_OI,RT_OI_CHG,RT_SPREAD,RT_VOL")
             is_get_dynamic = 1
         else:
             # If the date is one day later,
             # it will access the WSS database because the WSQ real time data is not the data required.
             get_static = w.wss(self.stock_id,
-                               "SEC_NAME,WINDCODE,AMT,CLOSE,CHG,PCT_CHG",
+                               "SEC_NAME,WINDCODE,CHG,PCT_CHG,CLOSE,OI,OI_CHG,VOLUME,IF_BASIS",
                                "tradeDate=%s;priceAdj=U;cycle=D" % self.date_input)
         data_dict = {}
         # Use the name dict to make the names all the same
@@ -39,7 +39,15 @@ class Session:
             'RT_LAST': 'CLOSE',
             'CLOSE': 'CLOSE',
             'RT_AMT': 'AMT',
-            'AMT': 'AMT'
+            'AMT': 'AMT',
+            'RT_OI': 'OPEN_INTEREST',
+            'OI': 'OPEN_INTEREST',
+            'RT_OI_CHG': 'OPEN_INTEREST_CHG',
+            'OI_CHG': 'OPEN_INTEREST_CHG',
+            'RT_SPREAD': 'SPREAD',
+            'IF_BASIS': 'SPREAD',
+            'RT_VOL': 'VOLUME',
+            'VOLUME': 'VOLUME'
         }
         for i in range(len(get_static.Codes)):
             codes = get_static.Codes[i]
@@ -58,5 +66,6 @@ class Session:
     def data_printer(self):
         data_dict = self.data_manage()
         return data_dict[self.stock_id]['SEC_NAME'], round(data_dict[self.stock_id]['PCT_CHG'], 2), \
-            round(data_dict[self.stock_id]['CHG'], 2), round(data_dict[self.stock_id]['CLOSE'], 2), \
-            data_dict[self.stock_id]['AMT']
+            round(data_dict[self.stock_id]['CHG'], 2), round(data_dict[self.stock_id]['CLOSE'], 1), \
+            int(data_dict[self.stock_id]['OPEN_INTEREST']), int(data_dict[self.stock_id]['OPEN_INTEREST_CHG']), \
+            int(data_dict[self.stock_id]['VOLUME']), round(data_dict[self.stock_id]['SPREAD'], 2)

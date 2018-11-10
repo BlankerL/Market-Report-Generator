@@ -51,10 +51,6 @@ class StockDetailFinder:
     def data_printer(self):
         data_dict = self.data_manage()
         # For the foreign stock index, the amt is not available in Wind
-        if data_dict[self.stock_id]['AMT'] is None:
-            return data_dict[self.stock_id]['SEC_NAME'], round(data_dict[self.stock_id]['PCT_CHG'] * 100, 2), \
-                   round(data_dict[self.stock_id]['CHG'], 2), round(data_dict[self.stock_id]['LAST'], 2)
-        else:
-            return data_dict[self.stock_id]['SEC_NAME'], round(data_dict[self.stock_id]['PCT_CHG']*100, 2), \
-                round(data_dict[self.stock_id]['CHG'], 2), round(data_dict[self.stock_id]['LAST'], 2), \
-                round(data_dict[self.stock_id]['AMT'], 2)
+        return data_dict[self.stock_id]['SEC_NAME'], round(data_dict[self.stock_id]['PCT_CHG']*100, 2), \
+            round(data_dict[self.stock_id]['CHG'], 2), round(data_dict[self.stock_id]['LAST'], 2), \
+            data_dict[self.stock_id]['AMT']

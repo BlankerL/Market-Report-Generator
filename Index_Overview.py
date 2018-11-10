@@ -36,7 +36,7 @@ def market_overview_other(market_type, stock_id_list, date):
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
         stock_dict[stock_num] = {}
-        stock_dict[stock_num]['sec_name'], stock_dict[stock_num]['pct_chg'], stock_dict[stock_num]['chg'], stock_dict[stock_num]['close'] = StockDetailFinder.StockDetailFinder(stock, date).data_printer()
+        stock_dict[stock_num]['sec_name'], stock_dict[stock_num]['pct_chg'], stock_dict[stock_num]['chg'], stock_dict[stock_num]['close'], stock_dict[stock_num]['amt'] = StockDetailFinder.StockDetailFinder(stock, date).data_printer()
     for stock_num in range(len(stock_id_list)):
         if stock_dict[stock_num]['pct_chg'] > 0:
             go_up = go_up + 1

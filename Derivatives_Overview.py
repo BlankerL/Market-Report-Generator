@@ -1,4 +1,4 @@
-from WindPy import *
+import StockDetailFinder
 import Services
 
 def market_overview(id_list, date):

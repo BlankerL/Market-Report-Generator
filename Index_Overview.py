@@ -9,7 +9,7 @@ class StockDetailFinder:
     def __init__(self, stock_id, date_input):
         self.stock_id = stock_id
         self.date_input = date_input  # Need to be an str
-
+    # TODO: If I need to get instant data, I need to use WSQ
     def data_manage(self):
         get_data = w.wss(self.stock_id,
                          "SEC_NAME,WINDCODE,CHG,PCT_CHG,CLOSE3,AMT",
@@ -35,7 +35,7 @@ class StockDetailFinder:
 # In other markets, it is in no need. But I need to mention all the N markets total performance.
 def market_overview_china(stock_id_list, date):
     weekday = Services.weekday_returner(date=date)
-    date = date[4:6] + '月' + date[6:8] + '日'
+    date = Services.date_optimizer(date[4:6]) + '月' + Services.date_optimizer(date[6:8]) + '日'
     weekday = weekday + '（' + date + '）'
     print(weekday, end='，')
 
@@ -57,7 +57,7 @@ def market_overview_china(stock_id_list, date):
 def market_overview_other(market_type, stock_id_list, date):
     # print date
     weekday = Services.weekday_returner(date=date)
-    date = date[4:6] + '月' + date[6:8] + '日'
+    date = Services.date_optimizer(date[4:6]) + '月' + Services.date_optimizer(date[6:8]) + '日'
     weekday = weekday + '（' + date + '）'
     print(weekday, end='，')
     # parameters for save data into dict and generate the overview words of the market

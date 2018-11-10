@@ -29,3 +29,9 @@ def weekday_returner(date):
         '4': '上周五'
     }.get(str(weekday))
 
+
+def weekday_printer(date):
+    weekday = weekday_returner(date=date)
+    date = date_optimizer(date[4:6]) + '月' + date_optimizer(date[6:8]) + '日'
+    return weekday + '（' + date + '）'
+

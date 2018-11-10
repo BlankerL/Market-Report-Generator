@@ -7,9 +7,8 @@ import Services
 # In China, I need to mention the specific points of going up or down.
 # In other markets, it is in no need. But I need to mention all the N markets total performance.
 def market_overview_china(stock_id_list, date):
-    weekday = Services.weekday_returner(date=date)
-    date = Services.date_optimizer(date[4:6]) + '月' + Services.date_optimizer(date[6:8]) + '日'
-    weekday = weekday + '（' + date + '）'
+    # print date
+    weekday = Services.weekday_printer(date=date)
     print(weekday, end='，')
 
     for stock_num in range(len(stock_id_list)):
@@ -29,9 +28,7 @@ def market_overview_china(stock_id_list, date):
 
 def market_overview_other(market_type, stock_id_list, date):
     # print date
-    weekday = Services.weekday_returner(date=date)
-    date = Services.date_optimizer(date[4:6]) + '月' + Services.date_optimizer(date[6:8]) + '日'
-    weekday = weekday + '（' + date + '）'
+    weekday = Services.weekday_printer(date=date)
     print(weekday, end='，')
     # parameters for save data into dict and generate the overview words of the market
     go_up = 0
@@ -106,7 +103,6 @@ def volume_detector(stock_id_list, date):
         amt = amt / 100000000
         total_amt_yesterday = total_amt_yesterday + amt
     print('总成交额%.2f亿元' % total_amt_today, end='，')
-    print(total_amt_yesterday)
     if total_amt_today > total_amt_yesterday * 1.2:
         print('较上一交易日量能明显上升。')
     elif total_amt_yesterday < total_amt_today < total_amt_yesterday * 1.2:

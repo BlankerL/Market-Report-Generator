@@ -6,7 +6,7 @@ import Services
 # The main difference between China and Others are the delivery of contents.
 # In China, I need to mention the specific points of going up or down.
 # In other markets, it is in no need. But I need to mention all the N markets total performance.
-def market_overview_china(stock_id_list, date):
+def overview_china(stock_id_list, date):
     # print date
     weekday = Services.weekday_printer(date=date)
     print(weekday, end='，')
@@ -26,7 +26,7 @@ def market_overview_china(stock_id_list, date):
             print('%s涨%.2f%%或%.2f点，报%.2f点' % (sec_name, abs(pct_chg), abs(chg), close), end=symbol)
 
 
-def market_overview_other(market_type, stock_id_list, date):
+def overview_others(market_type, stock_id_list, date):
     # print date
     weekday = Services.weekday_printer(date=date)
     print(weekday, end='，')

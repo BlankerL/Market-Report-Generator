@@ -36,7 +36,8 @@ def weekday_printer(date):
     date = date_optimizer(date[4:6]) + '月' + date_optimizer(date[6:8]) + '日'
     return weekday + '（' + date + '）'
 
-def Derivatives_Getter():
+
+def derivatives_getter():
     url = 'https://BlankerL.github.io/UpdateChecker/Market_Report/derivatives.json'
     data = requests.get(url=url)
     return data.json()

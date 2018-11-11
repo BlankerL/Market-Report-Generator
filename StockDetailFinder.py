@@ -3,8 +3,8 @@ import datetime
 
 
 class Session:
-    def __init__(self, stock_id, date_input):
-        self.stock_id = stock_id
+    def __init__(self, single_stock_id, date_input):
+        self.stock_id = single_stock_id
         self.date_input = date_input  # Need to be a str
 
     def data_manage(self):
@@ -19,7 +19,8 @@ class Session:
                                "tradeDate=%s;priceAdj=U;cycle=D" % self.date_input)
             get_dynamic = w.wsq(self.stock_id,
                                 "RT_CHG,RT_PCT_CHG,RT_LAST,RT_AMT")
-            get_dynamic.Data[1][0] = get_dynamic.Data[1][0] * 100
+            for i in range(len(get_dynamic.Data[1])):
+                get_dynamic.Data[1][i] = get_dynamic.Data[1][i] * 100
             is_get_dynamic = 1
         else:
             # If the date is one day later,

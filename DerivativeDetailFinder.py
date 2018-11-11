@@ -3,8 +3,8 @@ import datetime
 
 
 class Session:
-    def __init__(self, stock_id, date_input):
-        self.stock_id = stock_id
+    def __init__(self, single_id, date_input):
+        self.stock_id = single_id
         self.date_input = date_input  # Need to be a str
 
     def data_manage(self):
@@ -14,7 +14,6 @@ class Session:
         date_today = datetime.date.today().strftime('%Y%m%d')
         is_get_dynamic = 0
         if self.date_input == date_today:
-            # TODO: Check the use of wss/wsq in SDF
             get_static = w.wss(self.stock_id,
                                "SEC_NAME,WINDCODE",
                                "tradeDate=%s;priceAdj=U;cycle=D" % self.date_input)

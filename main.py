@@ -24,11 +24,11 @@ if __name__ == "__main__":
     # Chinese Market
     Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
     Stock_ID_List_CN = Stock_ID_CN.split(',')
-    Index_Overview.market_overview_china(Stock_ID_List_CN, DATE)
+    Index_Overview.overview_china(Stock_ID_List_CN, DATE)
     # Asian Market
     Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
-    Index_Overview.market_overview_other('亚太股市', Stock_ID_List_Asia, DATE)
+    Index_Overview.overview_others('亚太股市', Stock_ID_List_Asia, DATE)
 
     print('\n')
 
@@ -48,20 +48,20 @@ if __name__ == "__main__":
     # US Market
     Stock_ID_US = "DJI.GI,SPX.GI,IXIC.GI"
     Stock_ID_List_US = Stock_ID_US.split(',')
-    Index_Overview.market_overview_other('美国三大股指', Stock_ID_List_US, DATE)
+    Index_Overview.overview_others('美国三大股指', Stock_ID_List_US, DATE)
     # European Market
     Stock_ID_US = "FTSE.GI,FCHI.GI,GDAXI.GI"
     Stock_ID_List_US = Stock_ID_US.split(',')
-    Index_Overview.market_overview_other('欧洲三大股指', Stock_ID_List_US, DATE)
+    Index_Overview.overview_others('欧洲三大股指', Stock_ID_List_US, DATE)
     # Asian Market
     Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
-    Index_Overview.market_overview_other('亚太股市', Stock_ID_List_Asia, DATE)
+    Index_Overview.overview_others('亚太股市', Stock_ID_List_Asia, DATE)
 
     print('\n')
 
     print('金融期货')
-    ID_Dictionary = Services.Derivatives_Getter()
+    ID_Dictionary = Services.derivatives_getter()
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
-    Index_Overview.market_overview_china(Stock_ID_List_Asia, DATE)
+    Index_Overview.overview_china(Stock_ID_List_Asia, DATE)
     # TODO: Make these codes done.

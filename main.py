@@ -62,6 +62,5 @@ if __name__ == "__main__":
 
     print('金融期货')
     ID_Dictionary = Services.derivatives_getter()
-    Stock_ID_List_Asia = Stock_ID_Asia.split(',')
-    Index_Overview.overview_china(Stock_ID_List_Asia, DATE)
+
     # TODO: Make these codes done.

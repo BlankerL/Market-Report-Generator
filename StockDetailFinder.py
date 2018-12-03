@@ -58,6 +58,7 @@ class Session:
 
     def data_printer(self):
         data_dict = self.data_manage()
+        # TODO: do not return round type. leave the .2f to do the round thing.
         return data_dict[self.stock_id]['SEC_NAME'], round(data_dict[self.stock_id]['PCT_CHG'], 2), \
             round(data_dict[self.stock_id]['CHG'], 2), round(data_dict[self.stock_id]['CLOSE'], 2), \
             data_dict[self.stock_id]['AMT']

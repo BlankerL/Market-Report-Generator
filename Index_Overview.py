@@ -93,7 +93,7 @@ def volume_detector(stock_id_list, date):
         print('%s成交%.2f亿元' % (sec_name, amt), end='，')
         total_amt_today = total_amt_today + amt
     # Yesterday Volume
-    if Services.weekday_returner(date) == '周一':
+    if Services.weekday_returner(date) == '周一':  # TODO: BUGS: 注意节假日避让
         yesterday_date = str(int(date)-3)
     else:
         yesterday_date = str(int(date)-1)

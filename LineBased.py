@@ -29,14 +29,12 @@ if __name__ == "__main__":
     # Asian Market
     Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
-    print(Index_Overview.overview_others('亚太股市', Stock_ID_List_Asia, DATE), end='')
-    print('\n')
+    print(Index_Overview.overview_others('亚太股市', Stock_ID_List_Asia, DATE))
 
     print('成交量')
     Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
     Stock_ID_List_CN = Stock_ID_CN.split(',')
-    Index_Overview.volume(Stock_ID_List_CN, DATE)
-    print('\n')
+    print(Index_Overview.volume(Stock_ID_List_CN, DATE))
 
     print('宏观策略')
     XueQiuSpider_Find3Pages.get_comment(date=DATE)
@@ -49,17 +47,15 @@ if __name__ == "__main__":
     # if int(datetime.datetime.today().strftime("%H")) <=  or int(datetime.datetime.today().strftime("%H")) >=
     Stock_ID_US = "DJI.GI,SPX.GI,IXIC.GI"
     Stock_ID_List_US = Stock_ID_US.split(',')
-    Index_Overview.overview_others('美国三大股指', Stock_ID_List_US, DATE)
-
+    print(Index_Overview.overview_others('美国三大股指', Stock_ID_List_US, DATE),end='')
     # European Market
     Stock_ID_US = "FTSE.GI,FCHI.GI,GDAXI.GI"
     Stock_ID_List_US = Stock_ID_US.split(',')
-    Index_Overview.overview_others('欧洲三大股指', Stock_ID_List_US, DATE)
+    print(Index_Overview.overview_others('欧洲三大股指', Stock_ID_List_US, DATE),end='')
     # Asian Market
     Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
-    Index_Overview.overview_others('亚太股市', Stock_ID_List_Asia, DATE)
-    print('\n')
+    print(Index_Overview.overview_others('亚太股市', Stock_ID_List_Asia, DATE))
 
 '''
     print('金融期货')

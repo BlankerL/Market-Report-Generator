@@ -5,7 +5,7 @@ import sys
 import Services
 import Index_Overview
 import Derivatives_Overview
-import XueQiuSpider_Find3Pages
+import XueQiuCrawler_Find3Pages
 
 
 if __name__ == "__main__":
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     print(Index_Overview.volume(Stock_ID_List_CN, DATE), end='\n')
 
     print('宏观策略')
-    print(XueQiuSpider_Find3Pages.get_comment(date=DATE), end='\n')
+    print(XueQiuCrawler_Find3Pages.get_comment(date=DATE), end='\n')
 
 
 

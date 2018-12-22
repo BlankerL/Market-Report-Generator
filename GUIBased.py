@@ -3,7 +3,7 @@ from WindPy import *
 import datetime
 import Index_Overview
 import Derivatives_Overview
-import XueQiuSpider_Find3Pages
+import XueQiuCrawler_Find3Pages
 
 
 class Application(tk.Frame):
@@ -91,7 +91,7 @@ class Application(tk.Frame):
         if self.CheckDate() is True:
             DATE = self.string_date.get()
 
-            self.text_window.insert("end", XueQiuSpider_Find3Pages.get_comment(date=DATE))
+            self.text_window.insert("end", XueQiuCrawler_Find3Pages.get_comment(date=DATE))
 
 
 if __name__ == "__main__":
@@ -101,6 +101,7 @@ if __name__ == "__main__":
     window = tk.Tk()
     window.title('日报数据简易生成插件')
     window.geometry('330x350')
+    window.iconbitmap('./static/icon.ico')
 
     app = Application(master=window)
     app.mainloop()

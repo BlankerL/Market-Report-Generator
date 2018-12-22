@@ -4,7 +4,7 @@ import re
 import Services
 
 
-def spider(page):
+def crawler(page):
     url_base = 'https://xueqiu.com/'
     url_data = 'https://xueqiu.com/v4/statuses/user_timeline.json?page=%d&user_id=6042339231' % page
     headers = {
@@ -40,15 +40,17 @@ def post_manage(user_post, date_input):
             today_post_list = re.split(r"<p>|</p>|<br/>", today_post)
             while '' in today_post_list:
                 today_post_list.remove('')
+            today_post = ''
             for j in today_post_list:
-                print(j)
+                today_post = today_post + j
+            return today_post
 
 
 def get_comment(date):
     for page in range(3):
-        user_post = spider(page=page+1)
-        post_manage(user_post, date_input=date)
+        user_post = crawler(page=page + 1)
+        return post_manage(user_post, date_input=date)
 
 
 if __name__ == "__main__":
-    get_comment(date='20181220')
+    print(get_comment(date='20181221'))

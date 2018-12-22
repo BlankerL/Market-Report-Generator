@@ -12,11 +12,17 @@ class Application(tk.Frame):
         self.master = master
         self.create_widgets()
 
+    def DateSetter(self):
+        return datetime.datetime.today().strftime('%Y%m%d')
+
     def create_widgets(self):
         self.label_date = tk.Label(window, text='日期：').grid(row=0, column=0, sticky="W")
+
         self.string_date = tk.StringVar()
-        self.string_date.set('20181221')
+        self.string_date.set(self.DateSetter())
         self.entry_date = tk.Entry(window, textvariable=self.string_date, width=10).grid(row=0, column=1)
+
+        self.label_date_note = tk.Label(window, text='默认为当天，注意修改', fg="red").grid(row=0, column=2, columnspan=2, sticky="W")
 
         self.StockIndexButton = tk.Button(text="股票市场", command=self.StockIndex, width=10)
         self.StockIndexButton.grid(row=1, column=0)
@@ -32,6 +38,7 @@ class Application(tk.Frame):
 
         self.text_window = tk.Text(window, width=45, height=20)
         self.text_window.grid(row=2, column=0, columnspan=4)
+        self.text_window.insert('end', '【注意事项】\n\n1.股票市场及成交量数据在收盘后可立即获得；\n2.宏观策略数据一般在15:30之后发布，19:00后必定可得。')
 
     def CheckDate(self):
         DATE = self.string_date.get()

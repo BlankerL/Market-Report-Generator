@@ -21,28 +21,12 @@ if __name__ == "__main__":
     else:
         pass
 
+    # TODO: Bugs: 用涨跌来判断是否持平，而不应该用涨跌幅
     print('全球市场')
     # Chinese Market
     Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
     Stock_ID_List_CN = Stock_ID_CN.split(',')
     print(Index_Overview.overview_china(Stock_ID_List_CN, DATE), end='')
-    # Asian Market
-    Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
-    Stock_ID_List_Asia = Stock_ID_Asia.split(',')
-    print(Index_Overview.overview_others('亚太股市', Stock_ID_List_Asia, DATE))
-
-    print('成交量')
-    Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
-    Stock_ID_List_CN = Stock_ID_CN.split(',')
-    print(Index_Overview.volume(Stock_ID_List_CN, DATE))
-
-    print('宏观策略')
-    XueQiuSpider_Find3Pages.get_comment(date=DATE)
-    print('\n')
-
-    # TODO: Bugs: 用涨跌来判断是否持平，而不应该用涨跌幅
-    print('海外市场')
-
     # US Market
     # if int(datetime.datetime.today().strftime("%H")) <=  or int(datetime.datetime.today().strftime("%H")) >=
     Stock_ID_US = "DJI.GI,SPX.GI,IXIC.GI"
@@ -56,6 +40,16 @@ if __name__ == "__main__":
     Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
     print(Index_Overview.overview_others('亚太股市', Stock_ID_List_Asia, DATE))
+
+    print('成交量')
+    Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
+    Stock_ID_List_CN = Stock_ID_CN.split(',')
+    print(Index_Overview.volume(Stock_ID_List_CN, DATE), end='\n')
+
+    print('宏观策略')
+    print(XueQiuSpider_Find3Pages.get_comment(date=DATE), end='\n')
+
+
 
 '''
     print('金融期货')

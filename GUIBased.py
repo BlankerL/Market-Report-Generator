@@ -17,15 +17,20 @@ class Application(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        self.StockIndexGenerator = tk.Button(self)
-        self.StockIndexGenerator["text"] = "股票市场"
-        self.StockIndexGenerator["command"] = self.StockIndex
-        self.StockIndexGenerator.pack(side="top")
+        self.StockIndexButton = tk.Button(self)
+        self.StockIndexButton["text"] = "股票市场"
+        self.StockIndexButton["command"] = self.StockIndex
+        self.StockIndexButton.pack(side="top")
 
-        self.VolumeGenerator = tk.Button(self)
-        self.VolumeGenerator["text"] = "成交量"
-        self.VolumeGenerator["command"] = self.Volume
-        self.VolumeGenerator.pack(side="top")
+        self.VolumeButton = tk.Button(self)
+        self.VolumeButton["text"] = "成交量"
+        self.VolumeButton["command"] = self.Volume
+        self.VolumeButton.pack(side="top")
+
+        self.StrategyButton = tk.Button(self)
+        self.StrategyButton["text"] = "宏观策略"
+        self.StrategyButton["command"] = self.Strategy
+        self.StrategyButton.pack(side="top")
 
         self.quit = tk.Button(self, text="QUIT", fg="red",
                               command=self.master.destroy)
@@ -57,6 +62,10 @@ class Application(tk.Frame):
         Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
         Stock_ID_List_CN = Stock_ID_CN.split(',')
         print(Index_Overview.volume(Stock_ID_List_CN, DATE))
+
+    def Strategy(self):
+        DATE = '20181221'
+        print(XueQiuSpider_Find3Pages.get_comment(date=DATE), end='\n')
 
 
 if __name__ == "__main__":

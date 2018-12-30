@@ -1,7 +1,7 @@
 # Market_Report
 Gadget made for auto-generating wordy things on Daily Report of Stock Market.
 
-券商行研日报自动撰写脚本（需Wind万得数据库支持）。
+通过Python整合Wind数据库数据及雪球等信息聚合平台，自动生成券商研报常规部分。
 
 ## Introduction
 我是一个金融学学生，对计算机很感兴趣。

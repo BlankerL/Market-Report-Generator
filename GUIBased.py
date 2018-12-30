@@ -67,7 +67,7 @@ class Application(tk.Frame):
             # European Market
             Stock_Name_EU = '欧洲三大股指'
             Stock_ID_EU = "FTSE.GI,FCHI.GI,GDAXI.GI"
-            Stock_ID_List_EU = Stock_ID_US.split(',')
+            Stock_ID_List_EU = Stock_ID_EU.split(',')
             self.text_window.insert("end", Index_Overview.overview_others(Stock_Name_EU, Stock_ID_List_EU, DATE))
             # Asian Market
             Stock_Name_Asia = '亚太股市'

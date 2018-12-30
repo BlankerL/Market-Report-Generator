@@ -106,7 +106,7 @@ def volume(stock_id_list, date):
             '创业板指': '创业板'
         }.get(sec_name, 'Error!')
         amt = amt/100000000
-        output_string = output_string + '{sec_name}成交{amt}亿元'.format(
+        output_string = output_string + '{sec_name}成交{amt:.2f}亿元'.format(
             sec_name=sec_name, amt=amt) + '，'
         total_amt_today = total_amt_today + amt
     # Yesterday Volume
@@ -119,7 +119,7 @@ def volume(stock_id_list, date):
         sec_name, pct_chg, chg, close, amt = StockDetailFinder.Session(stock, yesterday_date).data_printer()
         amt = amt / 100000000
         total_amt_yesterday = total_amt_yesterday + amt
-    output_string = output_string + '总成交额{total_amt_today}亿元'.format(
+    output_string = output_string + '总成交额{total_amt_today:.2f}亿元'.format(
         total_amt_today=total_amt_today) + '，'
     if total_amt_today > total_amt_yesterday * 1.2:
         output_string = output_string + '较上一交易日量能明显上升。'

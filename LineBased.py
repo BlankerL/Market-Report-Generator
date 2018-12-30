@@ -33,9 +33,9 @@ if __name__ == "__main__":
     Stock_ID_List_US = Stock_ID_US.split(',')
     print(Index_Overview.overview_others('美国三大股指', Stock_ID_List_US, DATE),end='')
     # European Market
-    Stock_ID_US = "FTSE.GI,FCHI.GI,GDAXI.GI"
-    Stock_ID_List_US = Stock_ID_US.split(',')
-    print(Index_Overview.overview_others('欧洲三大股指', Stock_ID_List_US, DATE),end='')
+    Stock_ID_EU = "FTSE.GI,FCHI.GI,GDAXI.GI"
+    Stock_ID_List_EU = Stock_ID_EU.split(',')
+    print(Index_Overview.overview_others('欧洲三大股指', Stock_ID_List_EU, DATE),end='')
     # Asian Market
     Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
@@ -48,8 +48,6 @@ if __name__ == "__main__":
 
     print('宏观策略')
     print(XueQiuCrawler_Find3Pages.get_comment(date=DATE), end='\n')
-
-
 
 '''
     print('金融期货')

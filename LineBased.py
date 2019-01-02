@@ -2,7 +2,7 @@ from WindPy import *
 import datetime
 import time
 import sys
-from Services import Index_Overview, XueQiuCrawler_Find3Pages
+from Services import Index_Overview, XueQiuCrawler_Find3Pages, Appendix, Derivatives_Overview
 
 if __name__ == "__main__":
 
@@ -39,17 +39,15 @@ if __name__ == "__main__":
     print('成交量')
     Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
     Stock_ID_List_CN = Stock_ID_CN.split(',')
-    print(Index_Overview.volume(Stock_ID_List_CN, DATE), end='\n')
+    print(Index_Overview.volume(Stock_ID_List_CN, DATE), end='\n\n')
 
     print('宏观策略')
-    print(XueQiuCrawler_Find3Pages.get_comment(date=DATE), end='\n')
+    print(XueQiuCrawler_Find3Pages.get_comment(date=DATE), end='\n\n')
 
-'''
     print('金融期货')
-    # TODO: bugs to fix. 涨跌幅数据错误会导致数据导出有误。
-    ID_Dictionary = Services.derivatives_getter()
-    Derivatives_Overview.market_overview(ID_Dictionary['IH_Series'], DATE, '上证50股指期货')
-    Derivatives_Overview.market_overview(ID_Dictionary['IC_Series'], DATE, '中证500股指期货')
-    Derivatives_Overview.market_overview(ID_Dictionary['IF_Series'], DATE, '沪深300股指期货')
-'''
+    ID_Dictionary = Appendix.derivatives_getter()
+    print(Derivatives_Overview.market_overview(ID_Dictionary['IH_Series'], DATE, '上证50股指期货'), end='')
+    print(Derivatives_Overview.market_overview(ID_Dictionary['IC_Series'], DATE, '中证500股指期货'), end='')
+    print(Derivatives_Overview.market_overview(ID_Dictionary['IF_Series'], DATE, '沪深300股指期货'), end='')
+
     # TODO: add '国债期货' module.

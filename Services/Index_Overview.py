@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from Services import StockDetailFinder, Services
+from Services import StockDetailFinder, Appendix
 from WindPy import *
 
 
@@ -9,7 +9,7 @@ from WindPy import *
 def overview_china(stock_id_list, date):
     output_string = ''
     # print date
-    weekday = Services.weekday_printer(date=date)
+    weekday = Appendix.weekday_printer(date=date)
     output_string = output_string + weekday + '，'
 
     for stock_num in range(len(stock_id_list)):
@@ -37,7 +37,7 @@ def overview_china(stock_id_list, date):
 def overview_others(market_type, stock_id_list, date):
     output_string = ''
     # print date
-    weekday = Services.weekday_printer(date=date)
+    weekday = Appendix.weekday_printer(date=date)
     output_string = output_string + weekday + '，'
     # parameters for save data into dict and generate the overview words of the market
     go_up = 0
@@ -109,7 +109,7 @@ def volume(stock_id_list, date):
             sec_name=sec_name, amt=amt) + '，'
         total_amt_today = total_amt_today + amt
     # Yesterday volume
-    if Services.weekday_returner(date) == '周一':  # TODO: BUGS: 注意节假日避让
+    if Appendix.weekday_returner(date) == '周一':  # TODO: BUGS: 注意节假日避让
         yesterday_date = str(int(date)-3)
     else:
         yesterday_date = str(int(date)-1)

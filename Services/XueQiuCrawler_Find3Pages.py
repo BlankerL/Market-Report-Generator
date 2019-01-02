@@ -1,7 +1,7 @@
 import requests
 import time
 import re
-from Services import Services
+from Services import Appendix
 
 
 def crawler(page):
@@ -35,7 +35,7 @@ def post_manage(user_post, date_input):
         post_day = time.strftime("%Y%m%d", post_time)
         post_hour = time.strftime("%H", post_time)
         # Three Judgement: date matches, time matches, the beginning words match
-        if date == post_day and int(post_hour) >= 15 and Services.weekday(date=date) in user_post[i]['text'][0:10]:
+        if date == post_day and int(post_hour) >= 15 and Appendix.weekday(date=date) in user_post[i]['text'][0:10]:
             today_post = user_post[i]['text']
             today_post_list = re.split(r"<p>|</p>|<br/>", today_post)
             while '' in today_post_list:

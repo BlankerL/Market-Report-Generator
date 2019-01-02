@@ -64,7 +64,7 @@ class Session:
 
     def data_printer(self):
         data_dict = self.data_manage()
-        return data_dict[self.stock_id]['SEC_NAME'], round(data_dict[self.stock_id]['PCT_CHG'], 2), \
+        return data_dict[self.stock_id]['SEC_NAME'], round(data_dict[self.stock_id]['PCT_CHG']*100, 2), \
             round(data_dict[self.stock_id]['CHG'], 2), round(data_dict[self.stock_id]['CLOSE'], 1), \
             int(data_dict[self.stock_id]['OPEN_INTEREST']), int(data_dict[self.stock_id]['OPEN_INTEREST_CHG']), \
             int(data_dict[self.stock_id]['VOLUME']), round(data_dict[self.stock_id]['SPREAD'], 2)

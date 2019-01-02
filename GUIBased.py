@@ -1,7 +1,7 @@
 import tkinter as tk
 from WindPy import *
 import datetime
-from Services import Index_Overview, XueQiuCrawler_Find3Pages
+from Services import Index_Overview, XueQiuCrawler_Find3Pages, Derivatives_Overview, Appendix
 
 
 class Application(tk.Frame):
@@ -31,12 +31,15 @@ class Application(tk.Frame):
         self.StrategyButton = tk.Button(text="宏观策略", command=self.strategy, width=10)
         self.StrategyButton.grid(row=1, column=2)
 
-        self.quit = tk.Button(text="退出", fg="red", width=10, command=self.master.destroy)
-        self.quit.grid(row=1, column=3)
+        self.DerivativeButton = tk.Button(text="期货市场", width=10, command=self.deravatives)
+        self.DerivativeButton.grid(row=1, column=3)
 
         self.text_window = tk.Text(window, width=45, height=35)
         self.text_window.grid(row=2, column=0, columnspan=4)
-        self.text_window.insert('end', '【注意事项】\n\n1.股票市场及成交量数据在收盘后可立即获得；\n2.宏观策略数据一般在15:30之后发布，19:00后必定可得。')
+        self.text_window.insert(tk.END, "【注意事项】\n\n")
+        self.text_window.insert(tk.END, "1.股票市场及成交量数据在收盘后可立即获得；\n")
+        self.text_window.insert(tk.END, "2.宏观策略数据一般在15:30之后发布，19:00后必定可得；\n")
+        self.text_window.insert(tk.END, "3.点击按钮后稍微卡顿是因为正在从数据库中获取数据，属于正常现象。")
 
     def check_date(self):
         DATE = self.string_date.get()
@@ -56,22 +59,22 @@ class Application(tk.Frame):
             # Chinese Market
             Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
             Stock_ID_List_CN = Stock_ID_CN.split(',')
-            self.text_window.insert("end", Index_Overview.overview_china(Stock_ID_List_CN, DATE))
+            self.text_window.insert("end", Index_Overview.overview_china(Stock_ID_List_CN, DATE) + '\n')
             # US Market
             Stock_Name_US = '美国三大股指'
             Stock_ID_US = "DJI.GI,SPX.GI,IXIC.GI"
             Stock_ID_List_US = Stock_ID_US.split(',')
-            self.text_window.insert("end", Index_Overview.overview_others(Stock_Name_US, Stock_ID_List_US, DATE))
+            self.text_window.insert("end", Index_Overview.overview_others(Stock_Name_US, Stock_ID_List_US, DATE) + '\n')
             # European Market
             Stock_Name_EU = '欧洲三大股指'
             Stock_ID_EU = "FTSE.GI,FCHI.GI,GDAXI.GI"
             Stock_ID_List_EU = Stock_ID_EU.split(',')
-            self.text_window.insert("end", Index_Overview.overview_others(Stock_Name_EU, Stock_ID_List_EU, DATE))
+            self.text_window.insert("end", Index_Overview.overview_others(Stock_Name_EU, Stock_ID_List_EU, DATE) + '\n')
             # Asian Market
             Stock_Name_Asia = '亚太股市'
             Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
             Stock_ID_List_Asia = Stock_ID_Asia.split(',')
-            self.text_window.insert("end", Index_Overview.overview_others(Stock_Name_Asia, Stock_ID_List_Asia, DATE))
+            self.text_window.insert("end", Index_Overview.overview_others(Stock_Name_Asia, Stock_ID_List_Asia, DATE) + '\n')
             self.text_window.see(tk.END)
 
     def volume(self):
@@ -93,6 +96,20 @@ class Application(tk.Frame):
 
             self.text_window.insert("end", XueQiuCrawler_Find3Pages.get_comment(date=DATE))
             self.text_window.see(tk.END)
+
+    def deravatives(self):
+        self.text_window.delete('1.0', 'end')
+
+        if self.check_date() is True:
+            DATE = self.string_date.get()
+
+            ID_Dictionary = Appendix.derivatives_getter()
+            self.text_window.insert("end", "上证50股指期货\n")
+            self.text_window.insert("end", Derivatives_Overview.market_overview(ID_Dictionary['IH_Series'], DATE, '上证50股指期货') + '\n')
+            self.text_window.insert("end", "中证500股指期货\n")
+            self.text_window.insert("end", Derivatives_Overview.market_overview(ID_Dictionary['IC_Series'], DATE, '中证500股指期货') + '\n')
+            self.text_window.insert("end", "沪深300股指期货\n")
+            self.text_window.insert("end", Derivatives_Overview.market_overview(ID_Dictionary['IF_Series'], DATE, '沪深300股指期货') + '\n')
 
 
 if __name__ == "__main__":

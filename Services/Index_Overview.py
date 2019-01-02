@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-import StockDetailFinder
-import Services
+from Services import StockDetailFinder, Services
 from WindPy import *
 
 
@@ -22,10 +21,10 @@ def overview_china(stock_id_list, date):
         else:
             symbol = '。\n'
 
-        if pct_chg < 0:
+        if chg < 0:
             output_string = output_string + '{sec_name}跌{pct_chg:.2f}%或{chg:.2f}点，报{close:.2f}点'.format(
                 sec_name=sec_name, pct_chg=abs(pct_chg), chg=abs(chg), close=close) + symbol
-        elif pct_chg == 0:
+        elif chg == 0:
             output_string = output_string + '{sec_name}报{close:.2f}点，与开盘价格持平'.format(
                 sec_name=sec_name, close=close) + symbol
         else:
@@ -48,7 +47,7 @@ def overview_others(market_type, stock_id_list, date):
         stock_dict[stock_num] = {}
         stock_dict[stock_num]['sec_name'], stock_dict[stock_num]['pct_chg'], stock_dict[stock_num]['chg'], stock_dict[stock_num]['close'], stock_dict[stock_num]['amt'] = StockDetailFinder.Session(stock, date).data_printer()
     for stock_num in range(len(stock_id_list)):
-        if stock_dict[stock_num]['pct_chg'] > 0:
+        if stock_dict[stock_num]['chg'] > 0:
             go_up = go_up + 1
         else:
             pass
@@ -78,10 +77,10 @@ def overview_others(market_type, stock_id_list, date):
             symbol = '；'
         else:
             symbol = '。\n'
-        if stock_dict[stock_num]['pct_chg'] < 0:
+        if stock_dict[stock_num]['chg'] < 0:
             output_string = output_string + '{sec_name}跌{pct_chg:.2f}%，报{close}点'.format(
                 sec_name=stock_dict[stock_num]['sec_name'], pct_chg=abs(stock_dict[stock_num]['pct_chg']), close=stock_dict[stock_num]['close']) + symbol
-        elif stock_dict[stock_num]['pct_chg'] == 0:
+        elif stock_dict[stock_num]['chg'] == 0:
             output_string = output_string + '{sec_name}报{close}点，与开盘价格持平'.format(
                 sec_name=stock_dict[stock_num]['sec_name'], close=stock_dict[stock_num]['close']) + symbol
         else:
@@ -96,7 +95,7 @@ def volume(stock_id_list, date):
     output_string = output_string + "成交量方面，"
     total_amt_today = 0
     total_amt_yesterday = 0
-    # Today Volume
+    # Today volume
     for stock_num in range(len(stock_id_list)):
         stock = stock_id_list[stock_num]
         sec_name, pct_chg, chg, close, amt = StockDetailFinder.Session(stock, date).data_printer()
@@ -109,7 +108,7 @@ def volume(stock_id_list, date):
         output_string = output_string + '{sec_name}成交{amt:.2f}亿元'.format(
             sec_name=sec_name, amt=amt) + '，'
         total_amt_today = total_amt_today + amt
-    # Yesterday Volume
+    # Yesterday volume
     if Services.weekday_returner(date) == '周一':  # TODO: BUGS: 注意节假日避让
         yesterday_date = str(int(date)-3)
     else:
@@ -135,7 +134,7 @@ def volume(stock_id_list, date):
 
 if __name__ == "__main__":
     w.start()
-
+    '''
     print('全球市场')
     # Chinese Market
     Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
@@ -145,8 +144,8 @@ if __name__ == "__main__":
     Stock_ID_Asia = "N225.GI,KS11.GI,AS51.GI"
     Stock_ID_List_Asia = Stock_ID_Asia.split(',')
     print(overview_others('亚太股市', Stock_ID_List_Asia, '20181221'))
-
+    '''
     print('成交量')
     Stock_ID_CN = '000001.SH,399001.SZ,399006.SZ'
     Stock_ID_List_CN = Stock_ID_CN.split(',')
-    print(volume(Stock_ID_List_CN, '20181221'))
+    print(volume(Stock_ID_List_CN, '20181228'))

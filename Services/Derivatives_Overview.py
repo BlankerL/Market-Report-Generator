@@ -1,6 +1,4 @@
-import DerivativeDetailFinder
-import StockDetailFinder
-import Services
+from Services import StockDetailFinder, DerivativeDetailFinder, Services
 
 
 # The given id_dict should be like
@@ -46,9 +44,9 @@ def market_overview(series_id_dict, date, series_name):
             symbol = '；'
         else:
             symbol = '。'
-        if pct_chg > 0:
+        if chg > 0:
             print('%s涨%.2f点或%.2f%%，报%.2f点' % (sec_name, abs(chg), abs(pct_chg), close), end=symbol)
-        elif pct_chg == 0:
+        elif chg == 0:
             print('%s报%.2f点，与开盘价格持平' % (sec_name, close), end=symbol)
         else:
             print('%s跌%.2f点或%.2f%%，报%.2f点' % (sec_name, abs(chg), abs(pct_chg), close), end=symbol)
@@ -56,9 +54,9 @@ def market_overview(series_id_dict, date, series_name):
     # To deal with the 'index' in the dictionary given.
     print('现货方面', end='，')
     sec_name, pct_chg, chg, close, amt = StockDetailFinder.Session(series_id_dict['index'], date).data_printer()
-    if pct_chg > 0:
+    if chg > 0:
         print('%s指数收盘涨%.2f点或%.2f%%，报%.2f点' % (sec_name, abs(chg), abs(pct_chg), close), end='。\n')
-    elif pct_chg == 0:
+    elif chg == 0:
         print('%s指数报%.2f点，与开盘价格持平' % (sec_name, close), end='。\n')
     else:
         print('%s指数收盘跌%.2f点或%.2f%%，报%.2f点' % (sec_name, abs(chg), abs(pct_chg), close), end='。\n')

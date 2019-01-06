@@ -15,4 +15,15 @@ Gadget made for auto-generating wordy things on Daily Report of Stock Market.
 2. 在电脑上安装Python环境（仅测试Python 3.7），并在Wind中安装Python插件。
 
 ## Communication
-希望能够和大家进行交流，对Github知之甚少，可以或许可以通过Issues进行讨论。
+希望能够和大家进行交流，欢迎大家通过Issues进行讨论。
+
+## License
+Market Report Generator - Generator for market report publicated by brokers.
+
+Copyright (C) 2018-2019 Jiabao Lin
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public Licensealong with this program. If not, see <https://www.gnu.org/licenses/>.

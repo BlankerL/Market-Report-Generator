@@ -1,4 +1,4 @@
-# Market_Report
+# Market Report Generator
 Gadget made for auto-generating wordy things on Daily Report of Stock Market.
 
 通过Python整合Wind数据库数据及雪球等信息聚合平台，自动生成券商研报常规部分。
